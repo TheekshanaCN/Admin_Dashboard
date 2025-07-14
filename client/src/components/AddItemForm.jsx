@@ -1,79 +1,103 @@
-import { useState } from 'react';
-import api from '../utils/api';
+"use client"
+
+import { useState, useContext } from "react"
+import { ThemeContext } from "../context/ThemeContext"
+import api from "../utils/api"
 
 export default function AddItemForm({ onItemAdded, onClose }) {
+  const { theme } = useContext(ThemeContext)
   const [formData, setFormData] = useState({
-    name: '',
-    price: '',
-    description: ''
-  });
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+    name: "",
+    price: "",
+    description: "",
+  })
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("")
+  const [success, setSuccess] = useState("")
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    setError(''); // Clear error when user types
-  };
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+    setError("")
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    
+    e.preventDefault()
+
     if (!formData.name.trim() || !formData.price) {
-      setError('Name and price are required');
-      return;
+      setError("Name and price are required")
+      return
     }
 
-    setIsLoading(true);
-    setError('');
-    setSuccess('');
+    setIsLoading(true)
+    setError("")
+    setSuccess("")
 
     try {
-      const response = await api.post('/items', {
+      const response = await api.post("/items", {
         ...formData,
-        price: Number(formData.price)
-      });
-      
-      setFormData({ name: '', price: '', description: '' });
-      setSuccess('Item added successfully!');
-      
+        price: Number(formData.price),
+      })
+
+      setFormData({ name: "", price: "", description: "" })
+      setSuccess("Item added successfully!")
+
       if (onItemAdded) {
-        onItemAdded(response.data);
+        onItemAdded(response.data)
       }
 
-      // Close the modal after short delay so user can see success message
       setTimeout(() => {
-        setSuccess('');
-        if (onClose) onClose();
-      }, 1000);
-      
+        setSuccess("")
+        if (onClose) onClose()
+      }, 1000)
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to add item');
+      setError(err.response?.data?.message || "Failed to add item")
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 max-w-md border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-      <h2 className="text-xl font-semibold text-[#171717] dark:text-gray-100 mb-4">Add New Item</h2>
-      
+    <div className="w-full">
+      <div className="mb-6">
+        <h2 className={`text-2xl font-bold ${theme === "dark" ? "text-white" : "text-gray-900"} mb-2`}>Add New Item</h2>
+        <p className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
+          Fill in the details below to add a new item to your inventory
+        </p>
+      </div>
+
       {error && (
-        <div className="mb-4 p-3 bg-red-50 text-red-600 text-sm rounded-md border border-red-100 dark:bg-red-900 dark:text-red-400 dark:border-red-700">
+        <div className="mb-4 p-4 bg-red-50 text-red-700 text-sm rounded-xl border border-red-200 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800 flex items-center gap-2">
+          <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              fillRule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+              clipRule="evenodd"
+            />
+          </svg>
           {error}
         </div>
       )}
-      
+
       {success && (
-        <div className="mb-4 p-3 bg-green-50 text-green-600 text-sm rounded-md border border-green-100 dark:bg-green-900 dark:text-green-400 dark:border-green-700">
+        <div className="mb-4 p-4 bg-green-50 text-green-700 text-sm rounded-xl border border-green-200 dark:bg-green-900/20 dark:text-green-400 dark:border-green-800 flex items-center gap-2">
+          <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              fillRule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+              clipRule="evenodd"
+            />
+          </svg>
           {success}
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-[#171717] dark:text-gray-100 mb-1">
+          <label
+            htmlFor="name"
+            className={`block text-sm font-semibold ${theme === "dark" ? "text-gray-200" : "text-gray-700"} mb-2`}
+          >
             Item Name *
           </label>
           <input
@@ -83,17 +107,28 @@ export default function AddItemForm({ onItemAdded, onClose }) {
             placeholder="Enter item name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#2664eb] focus:border-transparent transition-all dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+            className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 ${
+              theme === "dark"
+                ? "bg-[#171717] border-gray-700 text-white placeholder-gray-400 focus:border-blue-500"
+                : "bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500"
+            } focus:outline-none focus:ring-2 focus:ring-blue-500/20`}
             required
           />
         </div>
 
         <div>
-          <label htmlFor="price" className="block text-sm font-medium text-[#171717] dark:text-gray-100 mb-1">
+          <label
+            htmlFor="price"
+            className={`block text-sm font-semibold ${theme === "dark" ? "text-gray-200" : "text-gray-700"} mb-2`}
+          >
             Price *
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-2 text-gray-500 dark:text-gray-400">$</span>
+            <span
+              className={`absolute left-4 top-3.5 ${theme === "dark" ? "text-gray-400" : "text-gray-500"} font-medium`}
+            >
+              $
+            </span>
             <input
               type="number"
               id="price"
@@ -103,51 +138,57 @@ export default function AddItemForm({ onItemAdded, onClose }) {
               step="0.01"
               value={formData.price}
               onChange={handleChange}
-              className="w-full pl-8 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#2664eb] focus:border-transparent transition-all dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              className={`w-full pl-10 pr-4 py-3 rounded-xl border transition-all duration-200 ${
+                theme === "dark"
+                  ? "bg-[#171717] border-gray-700 text-white placeholder-gray-400 focus:border-blue-500"
+                  : "bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500"
+              } focus:outline-none focus:ring-2 focus:ring-blue-500/20`}
               required
             />
           </div>
         </div>
 
         <div>
-          <label htmlFor="description" className="block text-sm font-medium text-[#171717] dark:text-gray-100 mb-1">
+          <label
+            htmlFor="description"
+            className={`block text-sm font-semibold ${theme === "dark" ? "text-gray-200" : "text-gray-700"} mb-2`}
+          >
             Description
           </label>
           <textarea
             id="description"
             name="description"
             placeholder="Enter item description (optional)"
-            rows="3"
+            rows="4"
             value={formData.description}
             onChange={handleChange}
-            className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#2664eb] focus:border-transparent transition-all dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+            className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 resize-none ${
+              theme === "dark"
+                ? "bg-[#171717] border-gray-700 text-white placeholder-gray-400 focus:border-blue-500"
+                : "bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500"
+            } focus:outline-none focus:ring-2 focus:ring-blue-500/20`}
           />
         </div>
 
-        <div className="flex justify-between items-center">
+        <div className="flex gap-3 pt-4">
           <button
             type="submit"
             disabled={isLoading}
-            className={`py-2 px-4 rounded-md text-white font-medium transition-all ${
-              isLoading ? 'bg-[#2664eb]/80 cursor-not-allowed' : 'bg-[#2664eb] hover:bg-[#1e56d4]'
+            className={`flex-1 py-3 px-6 rounded-xl text-white font-semibold transition-all duration-200 ${
+              isLoading
+                ? "bg-blue-400 cursor-not-allowed"
+                : "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-lg hover:shadow-xl"
             }`}
           >
             {isLoading ? (
               <span className="flex items-center justify-center">
                 <svg
-                  className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                  className="animate-spin -ml-1 mr-2 h-5 w-5 text-white"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                 >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path
                     className="opacity-75"
                     fill="currentColor"
@@ -157,18 +198,22 @@ export default function AddItemForm({ onItemAdded, onClose }) {
                 Adding...
               </span>
             ) : (
-              'Add Item'
+              "Add Item"
             )}
           </button>
           <button
             type="button"
             onClick={onClose}
-            className="py-2 px-4 rounded-md text-gray-700 border border-gray-300 hover:bg-gray-100 transition dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700"
+            className={`px-6 py-3 rounded-xl font-semibold transition-all duration-200 ${
+              theme === "dark"
+                ? "text-gray-300 border border-gray-700 hover:bg-gray-800/50"
+                : "text-gray-700 border border-gray-300 hover:bg-gray-50"
+            }`}
           >
             Cancel
           </button>
         </div>
       </form>
     </div>
-  );
+  )
 }
