@@ -45,7 +45,7 @@ export default function ItemTable() {
   }
 
   const handleItemUpdated = () => {
-    fetchItems() // Refresh the items list
+    fetchItems()
     setShowEditModal(false)
     setSelectedItem(null)
   }
@@ -66,11 +66,11 @@ export default function ItemTable() {
       >
         {/* Header */}
         <div
-          className={`px-6 py-4 border-b ${theme === "dark" ? "border-gray-800 bg-[#171717]" : "border-gray-200 bg-gray-50"}`}
+          className={`px-4 sm:px-6 py-4 border-b ${theme === "dark" ? "border-gray-800 bg-[#171717]" : "border-gray-200 bg-gray-50"}`}
         >
           <div className="flex items-center justify-between">
             <div>
-              <h2 className={`text-xl font-bold ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
+              <h2 className={`text-lg sm:text-xl font-bold ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
                 Items Management
               </h2>
               <p className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"} mt-1`}>
@@ -114,14 +114,14 @@ export default function ItemTable() {
         )}
 
         {loading ? (
-          <div className="p-12 flex flex-col items-center justify-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-200 border-t-blue-600 mb-4"></div>
+          <div className="p-8 sm:p-12 flex flex-col items-center justify-center">
+            <div className="animate-spin rounded-full h-8 w-8 sm:h-12 sm:w-12 border-4 border-blue-200 border-t-blue-600 mb-4"></div>
             <p className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>Loading items...</p>
           </div>
         ) : items.length === 0 ? (
-          <div className="p-12 text-center">
+          <div className="p-8 sm:p-12 text-center">
             <svg
-              className={`w-16 h-16 mx-auto mb-4 ${theme === "dark" ? "text-gray-600" : "text-gray-400"}`}
+              className={`w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 ${theme === "dark" ? "text-gray-600" : "text-gray-400"}`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -133,7 +133,9 @@ export default function ItemTable() {
                 d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
               />
             </svg>
-            <h3 className={`text-lg font-semibold ${theme === "dark" ? "text-gray-300" : "text-gray-700"} mb-2`}>
+            <h3
+              className={`text-base sm:text-lg font-semibold ${theme === "dark" ? "text-gray-300" : "text-gray-700"} mb-2`}
+            >
               No items found
             </h3>
             <p className={`text-sm ${theme === "dark" ? "text-gray-500" : "text-gray-600"}`}>
@@ -141,120 +143,215 @@ export default function ItemTable() {
             </p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className={`${theme === "dark" ? "bg-[#171717]" : "bg-gray-50"}`}>
-                <tr>
-                  <th
-                    className={`px-6 py-4 text-left text-xs font-semibold ${theme === "dark" ? "text-gray-300" : "text-gray-600"} uppercase tracking-wider`}
-                  >
-                    Name
-                  </th>
-                  <th
-                    className={`px-6 py-4 text-left text-xs font-semibold ${theme === "dark" ? "text-gray-300" : "text-gray-600"} uppercase tracking-wider`}
-                  >
-                    Price
-                  </th>
-                  <th
-                    className={`px-6 py-4 text-left text-xs font-semibold ${theme === "dark" ? "text-gray-300" : "text-gray-600"} uppercase tracking-wider`}
-                  >
-                    Description
-                  </th>
-                  <th
-                    className={`px-6 py-4 text-right text-xs font-semibold ${theme === "dark" ? "text-gray-300" : "text-gray-600"} uppercase tracking-wider`}
-                  >
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody
-                className={`${theme === "dark" ? "bg-[#171717]" : "bg-white"} divide-y ${theme === "dark" ? "divide-gray-800" : "divide-gray-200"}`}
-              >
-                {items.map((item, index) => (
-                  <tr
-                    key={item._id}
-                    className={`transition-colors ${theme === "dark" ? "hover:bg-gray-800/30" : "hover:bg-gray-50"}`}
-                  >
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div
-                          className={`w-10 h-10 rounded-lg ${theme === "dark" ? "bg-gray-800/50" : "bg-gray-100"} flex items-center justify-center mr-3`}
-                        >
-                          <svg
-                            className={`w-5 h-5 ${theme === "dark" ? "text-gray-400" : "text-gray-500"}`}
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-                            />
-                          </svg>
-                        </div>
-                        <div>
-                          <div className={`text-sm font-semibold ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
-                            {item.name}
-                          </div>
-                          <div className={`text-xs ${theme === "dark" ? "text-gray-400" : "text-gray-500"}`}>
-                            Item #{index + 1}
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`text-lg font-bold ${theme === "dark" ? "text-green-400" : "text-green-600"}`}>
-                        ${item.price?.toFixed(2)}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className={`text-sm ${theme === "dark" ? "text-gray-300" : "text-gray-700"} max-w-xs`}>
-                        {item.description || (
-                          <span className={`italic ${theme === "dark" ? "text-gray-500" : "text-gray-400"}`}>
-                            No description
-                          </span>
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <button
-                          onClick={() => handleEdit(item)}
-                          className={`p-2 rounded-lg transition-colors ${theme === "dark" ? "text-blue-400 hover:bg-blue-900/20" : "text-blue-600 hover:bg-blue-50"}`}
-                          title="Edit item"
-                        >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                            />
-                          </svg>
-                        </button>
-                        <button
-                          onClick={() => handleDelete(item._id)}
-                          className={`p-2 rounded-lg transition-colors ${theme === "dark" ? "text-red-400 hover:bg-red-900/20" : "text-red-600 hover:bg-red-50"}`}
-                          title="Delete item"
-                        >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                    </td>
+          <>
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full">
+                <thead className={`${theme === "dark" ? "bg-[#171717]" : "bg-gray-50"}`}>
+                  <tr>
+                    <th
+                      className={`px-6 py-4 text-left text-xs font-semibold ${theme === "dark" ? "text-gray-300" : "text-gray-600"} uppercase tracking-wider`}
+                    >
+                      Name
+                    </th>
+                    <th
+                      className={`px-6 py-4 text-left text-xs font-semibold ${theme === "dark" ? "text-gray-300" : "text-gray-600"} uppercase tracking-wider`}
+                    >
+                      Price
+                    </th>
+                    <th
+                      className={`px-6 py-4 text-left text-xs font-semibold ${theme === "dark" ? "text-gray-300" : "text-gray-600"} uppercase tracking-wider`}
+                    >
+                      Description
+                    </th>
+                    <th
+                      className={`px-6 py-4 text-right text-xs font-semibold ${theme === "dark" ? "text-gray-300" : "text-gray-600"} uppercase tracking-wider`}
+                    >
+                      Actions
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody
+                  className={`${theme === "dark" ? "bg-[#171717]" : "bg-white"} divide-y ${theme === "dark" ? "divide-gray-800" : "divide-gray-200"}`}
+                >
+                  {items.map((item, index) => (
+                    <tr
+                      key={item._id}
+                      className={`transition-colors ${theme === "dark" ? "hover:bg-gray-800/30" : "hover:bg-gray-50"}`}
+                    >
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <div
+                            className={`w-10 h-10 rounded-lg ${theme === "dark" ? "bg-gray-800/50" : "bg-gray-100"} flex items-center justify-center mr-3`}
+                          >
+                            <svg
+                              className={`w-5 h-5 ${theme === "dark" ? "text-gray-400" : "text-gray-500"}`}
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+                              />
+                            </svg>
+                          </div>
+                          <div>
+                            <div
+                              className={`text-sm font-semibold ${theme === "dark" ? "text-white" : "text-gray-900"}`}
+                            >
+                              {item.name}
+                            </div>
+                            <div className={`text-xs ${theme === "dark" ? "text-gray-400" : "text-gray-500"}`}>
+                              Item #{index + 1}
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`text-lg font-bold ${theme === "dark" ? "text-green-400" : "text-green-600"}`}>
+                          ${item.price?.toFixed(2)}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className={`text-sm ${theme === "dark" ? "text-gray-300" : "text-gray-700"} max-w-xs`}>
+                          {item.description || (
+                            <span className={`italic ${theme === "dark" ? "text-gray-500" : "text-gray-400"}`}>
+                              No description
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <button
+                            onClick={() => handleEdit(item)}
+                            className={`p-2 rounded-lg transition-colors ${theme === "dark" ? "text-blue-400 hover:bg-blue-900/20" : "text-blue-600 hover:bg-blue-50"}`}
+                            title="Edit item"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                              />
+                            </svg>
+                          </button>
+                          <button
+                            onClick={() => handleDelete(item._id)}
+                            className={`p-2 rounded-lg transition-colors ${theme === "dark" ? "text-red-400 hover:bg-red-900/20" : "text-red-600 hover:bg-red-50"}`}
+                            title="Delete item"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile Card View */}
+            <div className="md:hidden">
+              {items.map((item, index) => (
+                <div
+                  key={item._id}
+                  className={`p-4 border-b ${theme === "dark" ? "border-gray-800" : "border-gray-200"} last:border-b-0`}
+                >
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex items-center flex-1">
+                      <div
+                        className={`w-10 h-10 rounded-lg ${theme === "dark" ? "bg-gray-800/50" : "bg-gray-100"} flex items-center justify-center mr-3 flex-shrink-0`}
+                      >
+                        <svg
+                          className={`w-5 h-5 ${theme === "dark" ? "text-gray-400" : "text-gray-500"}`}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+                          />
+                        </svg>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div
+                          className={`text-base font-semibold ${theme === "dark" ? "text-white" : "text-gray-900"} truncate`}
+                        >
+                          {item.name}
+                        </div>
+                        <div className={`text-xs ${theme === "dark" ? "text-gray-400" : "text-gray-500"}`}>
+                          Item #{index + 1}
+                        </div>
+                      </div>
+                    </div>
+                    <span
+                      className={`text-lg font-bold ${theme === "dark" ? "text-green-400" : "text-green-600"} ml-2`}
+                    >
+                      ${item.price?.toFixed(2)}
+                    </span>
+                  </div>
+
+                  {item.description && (
+                    <div
+                      className={`text-sm ${theme === "dark" ? "text-gray-300" : "text-gray-700"} mb-3 line-clamp-2`}
+                    >
+                      {item.description}
+                    </div>
+                  )}
+
+                  <div className="flex items-center justify-end gap-2">
+                    <button
+                      onClick={() => handleEdit(item)}
+                      className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                        theme === "dark" ? "text-blue-400 hover:bg-blue-900/20" : "text-blue-600 hover:bg-blue-50"
+                      }`}
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                        />
+                      </svg>
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(item._id)}
+                      className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                        theme === "dark" ? "text-red-400 hover:bg-red-900/20" : "text-red-600 hover:bg-red-50"
+                      }`}
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                        />
+                      </svg>
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
         )}
       </div>
 
@@ -262,7 +359,7 @@ export default function ItemTable() {
       {showEditModal && selectedItem && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
           <div
-            className={`${theme === "dark" ? "bg-[#171717] border-gray-800" : "bg-white"} rounded-2xl p-6 w-full max-w-md relative shadow-2xl transform transition-all`}
+            className={`${theme === "dark" ? "bg-[#171717] border-gray-800" : "bg-white"} rounded-2xl p-4 sm:p-6 w-full max-w-md relative shadow-2xl transform transition-all max-h-[90vh] overflow-y-auto`}
           >
             <button
               onClick={handleCloseEditModal}

@@ -69,40 +69,42 @@ export default function EditItemForm({ item, onItemUpdated, onClose }) {
 
   return (
     <div className="w-full">
-      <div className="mb-6">
-        <h2 className={`text-2xl font-bold ${theme === "dark" ? "text-white" : "text-gray-900"} mb-2`}>Edit Item</h2>
+      <div className="mb-4 sm:mb-6">
+        <h2 className={`text-xl sm:text-2xl font-bold ${theme === "dark" ? "text-white" : "text-gray-900"} mb-2`}>
+          Edit Item
+        </h2>
         <p className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
           Update the details below to modify this item in your inventory
         </p>
       </div>
 
       {error && (
-        <div className="mb-4 p-4 bg-red-50 text-red-700 text-sm rounded-xl border border-red-200 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800 flex items-center gap-2">
-          <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+        <div className="mb-4 p-3 sm:p-4 bg-red-50 text-red-700 text-sm rounded-xl border border-red-200 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800 flex items-start gap-2">
+          <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
             <path
               fillRule="evenodd"
               d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
               clipRule="evenodd"
             />
           </svg>
-          {error}
+          <span>{error}</span>
         </div>
       )}
 
       {success && (
-        <div className="mb-4 p-4 bg-green-50 text-green-700 text-sm rounded-xl border border-green-200 dark:bg-green-900/20 dark:text-green-400 dark:border-green-800 flex items-center gap-2">
-          <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+        <div className="mb-4 p-3 sm:p-4 bg-green-50 text-green-700 text-sm rounded-xl border border-green-200 dark:bg-green-900/20 dark:text-green-400 dark:border-green-800 flex items-start gap-2">
+          <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
             <path
               fillRule="evenodd"
               d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
               clipRule="evenodd"
             />
           </svg>
-          {success}
+          <span>{success}</span>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
         <div>
           <label
             htmlFor="name"
@@ -117,7 +119,7 @@ export default function EditItemForm({ item, onItemUpdated, onClose }) {
             placeholder="Enter item name"
             value={formData.name}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 ${
+            className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border transition-all duration-200 text-sm sm:text-base ${
               theme === "dark"
                 ? "bg-[#171717] border-gray-700 text-white placeholder-gray-400 focus:border-blue-500"
                 : "bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500"
@@ -135,7 +137,7 @@ export default function EditItemForm({ item, onItemUpdated, onClose }) {
           </label>
           <div className="relative">
             <span
-              className={`absolute left-4 top-3.5 ${theme === "dark" ? "text-gray-400" : "text-gray-500"} font-medium`}
+              className={`absolute left-3 sm:left-4 top-2.5 sm:top-3.5 ${theme === "dark" ? "text-gray-400" : "text-gray-500"} font-medium text-sm sm:text-base`}
             >
               $
             </span>
@@ -148,7 +150,7 @@ export default function EditItemForm({ item, onItemUpdated, onClose }) {
               step="0.01"
               value={formData.price}
               onChange={handleChange}
-              className={`w-full pl-10 pr-4 py-3 rounded-xl border transition-all duration-200 ${
+              className={`w-full pl-8 sm:pl-10 pr-3 sm:pr-4 py-2.5 sm:py-3 rounded-xl border transition-all duration-200 text-sm sm:text-base ${
                 theme === "dark"
                   ? "bg-[#171717] border-gray-700 text-white placeholder-gray-400 focus:border-blue-500"
                   : "bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500"
@@ -169,10 +171,10 @@ export default function EditItemForm({ item, onItemUpdated, onClose }) {
             id="description"
             name="description"
             placeholder="Enter item description (optional)"
-            rows="4"
+            rows="3"
             value={formData.description}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 resize-none ${
+            className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border transition-all duration-200 resize-none text-sm sm:text-base ${
               theme === "dark"
                 ? "bg-[#171717] border-gray-700 text-white placeholder-gray-400 focus:border-blue-500"
                 : "bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-500"
@@ -180,11 +182,11 @@ export default function EditItemForm({ item, onItemUpdated, onClose }) {
           />
         </div>
 
-        <div className="flex gap-3 pt-4">
+        <div className="flex flex-col sm:flex-row gap-3 pt-2 sm:pt-4">
           <button
             type="submit"
             disabled={isLoading}
-            className={`flex-1 py-3 px-6 rounded-xl text-white font-semibold transition-all duration-200 ${
+            className={`flex-1 py-2.5 sm:py-3 px-4 sm:px-6 rounded-xl text-white font-semibold transition-all duration-200 text-sm sm:text-base ${
               isLoading
                 ? "bg-blue-400 cursor-not-allowed"
                 : "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-lg hover:shadow-xl"
@@ -193,7 +195,7 @@ export default function EditItemForm({ item, onItemUpdated, onClose }) {
             {isLoading ? (
               <span className="flex items-center justify-center">
                 <svg
-                  className="animate-spin -ml-1 mr-2 h-5 w-5 text-white"
+                  className="animate-spin -ml-1 mr-2 h-4 w-4 sm:h-5 sm:w-5 text-white"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -214,7 +216,7 @@ export default function EditItemForm({ item, onItemUpdated, onClose }) {
           <button
             type="button"
             onClick={onClose}
-            className={`px-6 py-3 rounded-xl font-semibold transition-all duration-200 ${
+            className={`px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold transition-all duration-200 text-sm sm:text-base ${
               theme === "dark"
                 ? "text-gray-300 border border-gray-700 hover:bg-gray-800/50"
                 : "text-gray-700 border border-gray-300 hover:bg-gray-50"
